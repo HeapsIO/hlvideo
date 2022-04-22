@@ -106,13 +106,13 @@ class Webm {
 	}
 
 	public function readFrame(codec : hl.video.Aom.Codec, buffer : haxe.io.Bytes) : Null<Float> {
-		var frame = null;
-		while((!codec.getNextFrame(buffer))) {
-			frame = readMkvFrame();
-			if(frame == null)
-				return null;
-			codec.decode(frame.data);
-		}
+		var frame = readMkvFrame();
+		if(frame == null)
+			return null;
+		var r = codec.decode(frame.data);
+		if(r != 0)
+			return null;
+		codec.getNextFrame(buffer);
 		return frame.time;
 	}
 

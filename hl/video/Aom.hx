@@ -30,10 +30,14 @@ class AV1 implements Codec {
 	public function decode(frame : haxe.io.Bytes) : Void {
 		if(codec == null)
 			return;
-		aom_codec_decode(codec, hl.Bytes.fromBytes(frame), frame.length);
-		iter = aom_codec_init_iter();
-		if(iter == null)
-			throw "Failed to alloc iterator";
+		if(frame != null) {
+			aom_codec_decode(codec, hl.Bytes.fromBytes(frame), frame.length);
+			iter = aom_codec_init_iter();
+			if(iter == null)
+				throw "Failed to alloc iterator";
+		}
+		else
+			iter = null;
 	}
 
 	public function getNextFrame(buffer : haxe.io.Bytes) : Bool {
@@ -43,6 +47,8 @@ class AV1 implements Codec {
 		if(iter == null)
 			throw "Iterator didn't allocated properly";
 		if(image == null)
+			return false;
+		if(buffer == null)
 			return false;
 		aom_image_get_buffer(image, hl.Bytes.fromBytes(buffer));
 		return true;
