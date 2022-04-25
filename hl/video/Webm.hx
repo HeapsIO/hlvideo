@@ -109,9 +109,7 @@ class Webm {
 		var frame = readMkvFrame();
 		if(frame == null)
 			return null;
-		var r = codec.decode(frame.data);
-		if(r != 0)
-			return null;
+		codec.decode(frame.data);
 		codec.getNextFrame(buffer);
 		return frame.time;
 	}
