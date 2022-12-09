@@ -16,7 +16,7 @@ interface Codec {
 	public function close() : Void;
 }
 
-@:hlNative("video")
+@:hlNative("?video")
 class AV1 implements Codec {
 	var codec : AOMCodec;
 	var iter : AOMIter = null;

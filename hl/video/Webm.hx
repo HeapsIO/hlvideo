@@ -25,7 +25,7 @@ typedef Frame = {
 	var image : Aom.Image;
 };
 
-@:hlNative("video")
+@:hlNative("?video")
 class Webm {
 	var reader : MkvReader;
 
