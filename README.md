@@ -28,6 +28,14 @@ cmake --build . --config Release
 
 - Define HASHLINK_SRC env var to point to your `hashlink` directory
 
+#### OSX / Linux Setup
+
+Just call make
+
+```
+make
+```
+
 #### Dependencies / Requirements:
 
 - Haxe
