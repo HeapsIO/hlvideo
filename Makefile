@@ -6,11 +6,9 @@ HASHLINK_SRC=../hashlink
 AOM_BUILD=aom_build
 
 CFLAGS = -fPIC -I aom -I aom/third_party/libwebm -I aom/third_party/libyuv/include/
-LFLAGS = -lhl $(AOM_BUILD)/libaom.a
+LFLAGS = -lhl $(AOM_BUILD)/libaom.a -lstdc++
 
 SRC = webm.cc $(AOM_ADD)
-
-ifeq ($(UNAME),Darwin)
 
 YUV_DIR=$(AOM_BUILD)/CMakeFiles/yuv.dir
 WEBM_DIR=$(AOM_BUILD)/CMakeFiles/webm.dir
@@ -39,12 +37,17 @@ SRC += \
         $(WEBM_DIR)/third_party/libwebm/mkvmuxer/mkvwriter.cc.o \
         $(WEBM_DIR)/third_party/libwebm/mkvparser/mkvparser.cc.o \
         $(WEBM_DIR)/third_party/libwebm/mkvparser/mkvreader.cc.o
-endif
 
 OUTPUT=video.hdll
 
+CMAKE_FLAGS = -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_FLAGS="-fPIC" -DCMAKE_CXX_FLAGS="-fPIC"
+ifdef VERBOSE
+CMAKE_FLAGS += -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON 
+endif
+
 build: $(AOM_BUILD)
-	$(CXX) -shared $(CFLAGS) $(LFLAGS) $(SRC) -o $(OUTPUT)
+	$(CC) -shared $(CFLAGS) $(SRC) $(LFLAGS) -o $(OUTPUT)
+	nm video.hdll | grep aom_codec_av1_dx
 
 aom:
 	git clone $(AOM_GIT_DIR)
@@ -54,7 +57,5 @@ $(AOM_BUILD): aom
 ifeq ($(UNAME),Linux)
 	sudo apt-get install -y yasm nasm
 endif
-	cd $(AOM_BUILD) && cmake ../aom -DCMAKE_BUILD_TYPE=Release && make
+	cd $(AOM_BUILD) && cmake ../aom $(CMAKE_FLAGS) && make
 	touch $(AOM_BUILD)
-
-
