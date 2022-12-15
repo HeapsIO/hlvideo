@@ -1,6 +1,7 @@
 UNAME := $(shell uname -s)
 
 AOM_GIT_DIR := https://aomedia.googlesource.com/aom
+AOM_REVISION := 402e264b94fd74bdf66837da216b6251805b4ae4
 
 HASHLINK_SRC=../hashlink
 AOM_BUILD=aom_build
@@ -47,10 +48,10 @@ endif
 
 build: $(AOM_BUILD)
 	$(CC) -shared $(CFLAGS) $(SRC) $(LFLAGS) -o $(OUTPUT)
-	nm video.hdll | grep aom_codec_av1_dx
 
 aom:
 	git clone $(AOM_GIT_DIR)
+	cd $(AOM_GIT_DIR) && git checkout $(AOM_REVISION)
 
 $(AOM_BUILD): aom
 	mkdir -p $(AOM_BUILD)
