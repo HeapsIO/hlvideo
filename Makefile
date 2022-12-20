@@ -51,7 +51,7 @@ build: $(AOM_BUILD)
 
 aom:
 	git clone $(AOM_GIT_DIR)
-	cd $(AOM_GIT_DIR) && git checkout $(AOM_REVISION)
+	cd aom && git checkout $(AOM_REVISION)
 
 $(AOM_BUILD): aom
 	mkdir -p $(AOM_BUILD)
