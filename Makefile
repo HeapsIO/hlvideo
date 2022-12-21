@@ -55,8 +55,5 @@ aom:
 
 $(AOM_BUILD): aom
 	mkdir -p $(AOM_BUILD)
-ifeq ($(UNAME),Linux)
-	sudo apt-get install -y yasm nasm
-endif
 	cd $(AOM_BUILD) && cmake ../aom $(CMAKE_FLAGS) && make
 	touch $(AOM_BUILD)
