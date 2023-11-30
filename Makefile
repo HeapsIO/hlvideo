@@ -6,7 +6,7 @@ AOM_REVISION := 402e264b94fd74bdf66837da216b6251805b4ae4
 HASHLINK_SRC=../hashlink
 AOM_BUILD=aom_build
 
-CFLAGS = -fPIC -I aom -I aom/third_party/libwebm -I aom/third_party/libyuv/include/
+CFLAGS = -fPIC -I aom -I aom/third_party/libwebm -I aom/third_party/libyuv/include/ -std=c++11
 LFLAGS = -lhl $(AOM_BUILD)/libaom.a -lstdc++
 
 SRC = webm.cc $(AOM_ADD)
