@@ -57,3 +57,6 @@ $(AOM_BUILD): aom
 	mkdir -p $(AOM_BUILD)
 	cd $(AOM_BUILD) && cmake ../aom $(CMAKE_FLAGS) && make
 	touch $(AOM_BUILD)
+
+clean:
+	rm -f $(OUTPUT)
